@@ -4,10 +4,7 @@ import org.launchcode.mytrythymeleaf.data.EventData;
 import org.launchcode.mytrythymeleaf.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +32,22 @@ public class EventController {
         EventData.add(new Event(eventName,eventDescription));
         return "redirect:"
                 ;
+    }
+    @GetMapping("delete")
+    public String displayDeleteEventForm(Model model){
+        model.addAttribute("title","Delete Events");
+        model.addAttribute("events",EventData.getAll());
+        return "/events/delete";
+    }
+    @PostMapping("delete")
+    public String preocessDeleteEventForm(@RequestParam(required = false) int[] eventIds) {
+        if (eventIds != null) {
+
+
+        for (int id : eventIds) {
+            EventData.remove(id);
+        }
+    }
+       return "redirect:";
     }
 }

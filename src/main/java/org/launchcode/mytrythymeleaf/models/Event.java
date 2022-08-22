@@ -16,6 +16,7 @@ public class Event {
     private String description;
     private int id;
     private static int nextId=1;
+    @NotBlank(message="Email cannot be blank")
     @Email(message="invalid email!! try again")
     private String contactEmail;
     public Event(String name, String description, String contactEmail){

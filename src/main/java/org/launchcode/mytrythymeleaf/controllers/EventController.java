@@ -4,8 +4,10 @@ import org.launchcode.mytrythymeleaf.data.EventData;
 import org.launchcode.mytrythymeleaf.models.Event;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +26,17 @@ public class EventController {
         return "events/index";
     }
     @GetMapping("create")
-    public String renderCreateEventForm(){
+    public String renderCreateEventForm(Model model){
+        model.addAttribute("title","Create Event");
         return "events/create";
     }
     @PostMapping("create")
-    public String createEvent(@ModelAttribute Event newEvent /*@RequestParam String eventName,@RequestParam String eventDescription*/){
+    public String createEvent(@ModelAttribute @Valid Event newEvent, Errors errors,Model model /*@RequestParam String eventName,@RequestParam String eventDescription*/){
+        if(errors.hasErrors()){
+            model.addAttribute("title","Create Event");
+            model.addAttribute("errorMsg","Bad Data!");
+            return "events/create";
+        }
         EventData.add(newEvent);
         return "redirect:"
                 ;

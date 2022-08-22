@@ -8,14 +8,15 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Event {
+    private int id;
+    private static int nextId=1;
     @Size(min=3,max=50 ,message="name must be between 3 and 50 characters")
     @NotBlank(message="name cannot be blank")
     private String name;
     @Size(max=500,message="description too long")
 
     private String description;
-    private int id;
-    private static int nextId=1;
+
     @NotBlank(message="Email cannot be blank")
     @Email(message="invalid email!! try again")
     private String contactEmail;
@@ -26,6 +27,10 @@ public class Event {
         this.id=nextId;
         nextId++;
     }
+
+   public Event(){
+
+   }
 
     public String getName() {
         return name;

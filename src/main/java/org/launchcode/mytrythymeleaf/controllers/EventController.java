@@ -28,18 +28,18 @@ public class EventController {
     @GetMapping("create")
     public String renderCreateEventForm(Model model){
         model.addAttribute("title","Create Event");
+       model.addAttribute("event",new Event());
         return "events/create";
     }
     @PostMapping("create")
-    public String createEvent(@ModelAttribute @Valid Event newEvent, Errors errors,Model model /*@RequestParam String eventName,@RequestParam String eventDescription*/){
+    public String createEvent(@ModelAttribute @Valid Event newEvent, Errors errors,Model model ){
         if(errors.hasErrors()){
             model.addAttribute("title","Create Event");
-            model.addAttribute("errorMsg","Bad Data!");
             return "events/create";
         }
         EventData.add(newEvent);
-        return "redirect:"
-                ;
+        return "redirect:";
+
     }
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model){

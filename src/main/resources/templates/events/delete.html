@@ -10,10 +10,10 @@
 
         <th:block th:each="event:${events}">
             <div class="form-group">
-                <lable>
+                <label>
                 <span th:text="${event.name}"></span>
                 <input type="checkbox" name="eventIds" th:value="${event.id}" class="form-group">
-             </lable>
+             </label>
             </div>
         </th:block>
 

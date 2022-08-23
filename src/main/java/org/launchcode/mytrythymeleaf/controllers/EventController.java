@@ -1,20 +1,22 @@
 package org.launchcode.mytrythymeleaf.controllers;
 
-import org.launchcode.mytrythymeleaf.data.EventData;
+import org.launchcode.mytrythymeleaf.data.EventRepository;
 import org.launchcode.mytrythymeleaf.models.Event;
 import org.launchcode.mytrythymeleaf.models.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("events")
 public class EventController {
+    @Autowired
+    private EventRepository eventRepository;
+    //findAll,save,findById
     //private static List<Event> events =new ArrayList<>();
     @GetMapping
     public String displayAllEvents(Model model){
@@ -23,7 +25,7 @@ public class EventController {
         //events.add("Strange Loop");
         //events.add("Apple WWDC");
         //events.add("Spring One platform");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
     @GetMapping("create")
@@ -39,14 +41,14 @@ public class EventController {
             model.addAttribute("title","Create Event");
             return "events/create";
         }
-        EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:";
 
     }
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model){
         model.addAttribute("title","Delete Events");
-        model.addAttribute("events",EventData.getAll());
+        model.addAttribute("events",eventRepository.findAll());
         return "/events/delete";
     }
     @PostMapping("delete")
@@ -55,7 +57,7 @@ public class EventController {
 
 
         for (int id : eventIds) {
-            EventData.remove(id);
+            eventRepository.deleteById(id);
         }
     }
        return "redirect:";

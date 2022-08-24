@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 @Entity
-public class Event {
+public class Event extends AbstractEntity {
     @Id
     @GeneratedValue
     private int id;
@@ -53,9 +53,7 @@ public class Event {
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public String getContactEmail() {
         return contactEmail;
@@ -78,16 +76,5 @@ public class Event {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

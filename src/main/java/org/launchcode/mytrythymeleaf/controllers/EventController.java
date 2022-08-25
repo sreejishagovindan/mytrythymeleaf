@@ -1,8 +1,9 @@
 package org.launchcode.mytrythymeleaf.controllers;
 
+import org.launchcode.mytrythymeleaf.data.EventCategoryRepository;
 import org.launchcode.mytrythymeleaf.data.EventRepository;
 import org.launchcode.mytrythymeleaf.models.Event;
-import org.launchcode.mytrythymeleaf.models.EventType;
+import org.launchcode.mytrythymeleaf.models.EventCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ import javax.validation.Valid;
 public class EventController {
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private EventCategoryRepository eventCategoryRepository;
     //findAll,save,findById
     //private static List<Event> events =new ArrayList<>();
     @GetMapping
@@ -32,7 +35,8 @@ public class EventController {
     public String renderCreateEventForm(Model model){
         model.addAttribute("title","Create Event");
        model.addAttribute("event",new Event());
-       model.addAttribute("types",EventType.values());
+       model.addAttribute("eventCategories",eventCategoryRepository.findAll());
+       System.out.println("Size of Cat = " + eventCategoryRepository.findAll());
         return "events/create";
     }
     @PostMapping("create")
